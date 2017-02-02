@@ -19,7 +19,7 @@ defmodule Halftame.Mixfile do
   def application do
     [mod: {Halftame, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :guardian, :facebook]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,7 +35,9 @@ defmodule Halftame.Mixfile do
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
      {:gettext, "~> 0.11"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:guardian, "~> 0.14"},
+     {:facebook, "~> 0.9.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
