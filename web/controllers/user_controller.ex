@@ -1,5 +1,19 @@
 defmodule Halftame.UserController do
+  require IEx
   use Halftame.Web, :controller
+
+  plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
+  def logged_in_action(conn, params) do
+    IEx.pry
+    user = Guardian.Plug.current_resource(conn)
+    # do your stuff
+  end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render "error.json", message: "Authentication required"
+  end
 
   import Ecto.Query
   # https://graph.facebook.com/me?access_token=
@@ -9,6 +23,4 @@ defmodule Halftame.UserController do
     users = Halftame.Repo.all(Halftame.User)
     render(conn, "index.json", users: users)
   end
-
-
 end

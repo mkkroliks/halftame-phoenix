@@ -15,9 +15,8 @@ defmodule Halftame.AuthController do
 
          new_conn
          |> put_resp_header("authorization", "Bearer #{jwt}")
-        #  |> put_resp_header("x-expires", exp)
+         |> put_resp_header("x-expires", "#{exp}")
          |> render "auth.json", user: user, jwt: jwt, exp: exp
-         IEx.pry
        {:error, _connection} ->
          conn
          |> put_status(401)
