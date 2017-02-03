@@ -26,6 +26,7 @@ defmodule Halftame.ConnCase do
       import Ecto.Query
 
       import Halftame.Router.Helpers
+      import Halftame.TestHelpers
 
       # The default endpoint for testing
       @endpoint Halftame.Endpoint

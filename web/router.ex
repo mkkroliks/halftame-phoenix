@@ -10,6 +10,6 @@ defmodule Halftame.Router do
   scope "/api", Halftame do
     pipe_through :api
     resources "/users", UserController
-    resources "/auth", AuthController, only: [:create]
+    resources "/auth", AuthController, only: [:create, :delete]
   end
 end

@@ -1,4 +1,5 @@
 defmodule Halftame.UserControllerTest do
+  require IEx
   use Halftame.ConnCase
 
   alias Halftame.User
@@ -10,15 +11,17 @@ defmodule Halftame.UserControllerTest do
   # end
 
   setup do
-    user = create(:user)
+    user = insert_user()
     {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
-    {:ok, %{user: user, jwt: jst, claims: full_claims}}
+    {:ok, %{user: user, jwt: jwt, claims: full_claims}}
   end
 
   test "GET /api/users", %{jwt: jwt} do
     conn = conn()
       |> put_req_header("authorization", "Bearer #{jwt}")
       |> get "/api/users"
+    IEx.pry
+    assert json_response(conn, 200) == %{}
 end
 
   # test "lists all entries on index", %{conn: conn} do

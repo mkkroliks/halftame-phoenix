@@ -3,11 +3,6 @@ defmodule Halftame.UserController do
   use Halftame.Web, :controller
 
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
-  def logged_in_action(conn, params) do
-    IEx.pry
-    user = Guardian.Plug.current_resource(conn)
-    # do your stuff
-  end
 
   def unauthenticated(conn, _params) do
     conn
@@ -22,5 +17,11 @@ defmodule Halftame.UserController do
   def index(conn, _params) do
     users = Halftame.Repo.all(Halftame.User)
     render(conn, "index.json", users: users)
+  end
+
+  def logged_in_action(conn, params) do
+    IEx.pry
+    user = Guardian.Plug.current_resource(conn)
+    # do your stuff
   end
 end
