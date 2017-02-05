@@ -27,10 +27,13 @@ defmodule Halftame.AuthController do
   def delete(conn, _) do
     jwt = Guardian.Plug.current_token(conn)
     claims = Guardian.Plug.claims(conn)
-    IEx.pry
-    case Guardian.revoke!(jwt, claims) do
+
+    {_, map} = claims
+    # IEx.pry
+    case Guardian.revoke!(jwt, map) do
       :ok ->
-        IEx.pry
+        conn
+        |> render "logout.json", message: "Successfuly logged out"
       {:error, :could_not_revoke_token} ->
         # Oh no GuardianDb
         IEx.pry
@@ -38,7 +41,6 @@ defmodule Halftame.AuthController do
         IEx.pry
         # Oh no
     end
-    render "logout.json"
   end
 
 end

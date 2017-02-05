@@ -21,4 +21,8 @@ defmodule Halftame.AuthView do
     %{message: message}
   end
 
+  def render("logout.json", %{message: message}) do
+    %{message: message}
+  end
+
 end

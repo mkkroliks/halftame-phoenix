@@ -23,6 +23,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :guardian, Guardian,
+  hooks: GuardianDb,
   allowed_algos: ["HS512"], # optional
   verify_module: Guardian.JWT,  # optional
   issuer: "Halftame",
@@ -31,6 +32,10 @@ config :guardian, Guardian,
   verify_issuer: true, # optional
   secret_key: "lksdjowiurowieurlkjsdlwwer",
   serializer: Halftame.GuardianSerializer
+
+config :guardian_db, GuardianDb,
+  repo: Halftame.Repo,
+  schema_name: "tokens"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
