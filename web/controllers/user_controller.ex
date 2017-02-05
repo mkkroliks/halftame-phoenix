@@ -4,7 +4,8 @@ defmodule Halftame.UserController do
 
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
 
-  def unauthenticated(conn, _params) do
+  def unauthenticated(conn, error) do
+    IEx.pry
     conn
     |> put_status(401)
     |> render "error.json", message: "Authentication required"
