@@ -16,13 +16,34 @@ defmodule Halftame.UserControllerTest do
     {:ok, %{user: user, jwt: jwt, claims: full_claims}}
   end
 
-  test "GET /api/users", %{jwt: jwt} do
-    conn = conn()
+  test "GET /api/users/:id", %{user: user, jwt: jwt} do
+    conn = build_conn()
       |> put_req_header("authorization", "Bearer #{jwt}")
-      |> get "/api/users"
+      |> get("/api/users/#{user.id}")
     IEx.pry
-    assert json_response(conn, 200) == %{}
-end
+    assert json_response(conn, 200) == %{"id" => user.id,
+                                         "name" => user.name,
+                                         "token" => user.token}
+  end
+
+  test "DELETE api/auth/:id", %{jwt: jwt} do
+    conn = build_conn()
+     |> put_req_header("authorization", "Bearer #{jwt}")
+     |> delete("/api/auth/1")
+
+     assert Guardian.decode_and_verify(jwt) == {:error, :token_not_found}
+  end
+
+  test "requires user authentication on all actions", %{conn: conn} do
+    IEx.pry
+    Enum.each([
+        get(conn, user_path(conn, :show, "123"))
+    ], fn conn ->
+      IEx.pry
+      assert json_response(conn, 401)
+      assert conn.halted
+    end)
+  end
 
   # test "lists all entries on index", %{conn: conn} do
   #   conn = get conn, user_path(conn, :index)

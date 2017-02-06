@@ -6,7 +6,7 @@ defmodule Halftame.UserView do
   end
 
   def render("show.json", %{user: user}) do
-    %{user: render_one(user, Halftame.UserView, "user.json")}
+    render_one(user, Halftame.UserView, "user.json")
   end
 
   def render("user.json", %{user: user}) do
