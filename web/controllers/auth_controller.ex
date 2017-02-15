@@ -2,8 +2,6 @@ defmodule Halftame.AuthController do
   require IEx
   use Halftame.Web, :controller
 
-  # %{"auth" => %{"token"}}
-  # %{"token" => token}
   def create(conn, %{"token" => token}) do
     case Halftame.User.login_by_facebook_token(conn, token, repo: Repo) do
        {:ok, user} ->
@@ -21,13 +19,6 @@ defmodule Halftame.AuthController do
           {:error, reason} -> # handle failure
                     IEx.pry
         end
-        #  new_conn = Guardian.Plug.api_sign_in(conn, user)
-        #  jwt = Guardian.Plug.current_token(new_conn)
-        #  claims = Guardian.Plug.claims(new_conn)
-        #  {_, map} = claims
-        #  exp = Map.get(map, "exp")
-
-        #  new_conn
        {:error, _connection} ->
          conn
          |> put_status(401)
@@ -36,23 +27,22 @@ defmodule Halftame.AuthController do
   end
 
   def delete(conn, _) do
-    IEx.pry
+
     jwt = Guardian.Plug.current_token(conn)
     claims = Guardian.Plug.claims(conn)
-
 
     {_, map} = claims
     IEx.pry
     case Guardian.revoke!(jwt, map) do
       :ok ->
         conn
-        |> render "logout.json", message: "Successfuly logged out"
+        |> render("logout.json", message: "Successfuly logged out")
       {:error, :could_not_revoke_token} ->
-        # Oh no GuardianDb
-        IEx.pry
+        conn
+        |> render("logout.json", message: "Server error")
       {:error, reason} ->
-        IEx.pry
-        # Oh no
+        conn
+        |> render("logout.json", message: "Server error")
     end
   end
 

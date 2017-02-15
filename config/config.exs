@@ -7,8 +7,9 @@ use Mix.Config
 
 # General application configuration
 config :halftame,
-  ecto_repos: [Halftame.Repo]
-
+  ecto_repos: [Halftame.Repo],
+  fb_app_id: "238751596568799",
+  fb_app_secret: "21826bef260ca6e7517b23e519e31849"
 # Configures the endpoint
 config :halftame, Halftame.Endpoint,
   url: [host: "localhost"],
@@ -35,7 +36,9 @@ config :guardian, Guardian,
 
 config :guardian_db, GuardianDb,
   repo: Halftame.Repo
-  # schema_name: "tokens"
+
+config :facebook,
+  appsecret: "21826bef260ca6e7517b23e519e31849"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
