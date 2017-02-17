@@ -18,14 +18,17 @@ defmodule Halftame.User do
     |> validate_required([:name, :token])
   end
 
-  # 238751596568799|ztueE2_tJ9-B1wtIKdta-H14Ph8 - app access token
   def login_by_facebook_token(conn, token, opts) do
     repo = Keyword.fetch!(opts, :repo)
 
-    params = facebook_user_params(token)
+    {:json, map} = facebook_user_params(token)
+    longlife_token = Map.get(map, "access_token")
+
+    {:json, params} = Facebook.me("email, first_name, photo", longlife_token)
+    params = Map.put(params, :fb_access_token, longlife_token)
 
     case params do
-      %{email: email, first_name: first_name, photo: photo} ->
+      %{email: email, first_name: first_name, photo: photo, fb_access_token: longlife_token} ->
           if user = repo.get_by(Halftame.User, email: email) do
             {:ok, user}
           else

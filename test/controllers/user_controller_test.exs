@@ -47,9 +47,11 @@ defmodule Halftame.UserControllerTest do
 
   test "test facebook login params" do
     # token = Application.fetch_env!(:halftame, :facebook_api_token)
+    fb_app_id = Application.fetch_env!(:halftame, :fb_app_id)
+    fb_app_access_token = Application.fetch_env!(:halftame, :fb_app_access_token)
+    {:json, %{"data" => list}} = Facebook.Graph.get("#{fb_app_id}/accounts/test-users",
+                                                    [access_token: fb_app_access_token])
 
-    {:json, %{"data" => list}} = Facebook.Graph.get("238751596568799/accounts/test-users",
-                                                    [access_token: "238751596568799|ztueE2_tJ9-B1wtIKdta-H14Ph8"])
     access_token = Map.get(List.first(list), "access_token")
     assert User.facebook_user_params(access_token) == %{"email" => "email",
                                                  "first_name" => "first_name",

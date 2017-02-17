@@ -9,7 +9,9 @@ use Mix.Config
 config :halftame,
   ecto_repos: [Halftame.Repo],
   fb_app_id: "238751596568799",
-  fb_app_secret: "21826bef260ca6e7517b23e519e31849"
+  fb_app_secret: "21826bef260ca6e7517b23e519e31849",
+  fb_app_access_token: "238751596568799|ztueE2_tJ9-B1wtIKdta-H14Ph8"
+
 # Configures the endpoint
 config :halftame, Halftame.Endpoint,
   url: [host: "localhost"],

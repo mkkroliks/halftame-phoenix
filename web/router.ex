@@ -11,5 +11,7 @@ defmodule Halftame.Router do
     pipe_through :api
     resources "/users", UserController
     resources "/auth", AuthController, only: [:create, :delete]
+    
+    get "/users/me", UserController, :me
   end
 end

@@ -12,8 +12,6 @@ defmodule Halftame.UserController do
     |> put_status(401)
     |> render("error.json", message: "Authentication required")
   end
-  # https://graph.facebook.com/me?access_token=
-  # https://graph.facebook.com/me?fields=email&access_token=EAADZAJLAaYN8BAHUxJKkoiZC1KWpTuFjzZCXRJIZCFmPgvFZBByiVzVRzsJ9RZCqVpF6ZBPEL6mH2gXrBog3P2yPjigEoFgqJ9F9C97Yi5Aay0kKZCZCZCsk9jO9eHQZC5bYKz9eji7NgZAXLNEUo5NrKrHFBFrQ4wfk7zzkuaQ4vys79XPAsqL4pNf8ATwhr4gxYRX10oMaixAW8tXEFpEPOlMWh1ODINyds80ZD
 
   def index(conn, _params) do
     users = Repo.all(Halftame.User)
@@ -25,9 +23,8 @@ defmodule Halftame.UserController do
     render(conn, "show.json", user: user)
   end
 
-  def logged_in_action(conn, params) do
-    IEx.pry
+  def me(conn, _) do
     user = Guardian.Plug.current_resource(conn)
-    # do your stuff
+    render(conn, "show.json", user: user)
   end
 end
