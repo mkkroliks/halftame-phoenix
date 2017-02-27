@@ -1,3 +1,4 @@
 [submodule "google-api-elixir-client"]
 	path = google-api-elixir-client
 	url = https://github.com/mkkroliks/google-api-elixir-client.git
+	ignore = untracked
