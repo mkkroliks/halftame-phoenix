@@ -42,6 +42,9 @@ config :guardian_db, GuardianDb,
 config :facebook,
   appsecret: "21826bef260ca6e7517b23e519e31849"
 
+config :google_api_client,
+  api_key: "AIzaSyAmAzBv4n9N-B8XJM79elp143EnMky6qMY"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

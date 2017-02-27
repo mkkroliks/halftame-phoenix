@@ -19,7 +19,7 @@ defmodule Halftame.Mixfile do
   def application do
     [mod: {Halftame, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :guardian, :facebook, :guardian_db]]
+                    :phoenix_ecto, :postgrex, :guardian, :facebook, :guardian_db, :google_api_client]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,9 @@ defmodule Halftame.Mixfile do
      {:cowboy, "~> 1.0"},
      {:guardian, "~> 0.14"},
      {:facebook, "~> 0.9.0"},
-     {:guardian_db, "~> 0.8"}]
+     {:guardian_db, "~> 0.8"},
+     {:google_api_client, path: "./google-api-elixir-client"}
+   ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

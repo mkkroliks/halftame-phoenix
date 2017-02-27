@@ -9,9 +9,11 @@ defmodule Halftame.Router do
 
   scope "/api", Halftame do
     pipe_through :api
+
+    get "/users/me", UserController, :me
+    post "/google/cities", GoogleController, :cities
+
     resources "/users", UserController
     resources "/auth", AuthController, only: [:create, :delete]
-    
-    get "/users/me", UserController, :me
   end
 end

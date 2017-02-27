@@ -11,8 +11,9 @@ defmodule Halftame.UserView do
 
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      name: user.name,
-      token: user.token}
+      first_name: user.first_name,
+      photo: user.photo,
+      email: user.email}
   end
 
   def render("error.json", %{message: message}) do
