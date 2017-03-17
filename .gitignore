@@ -5,7 +5,7 @@
 /*.ez
 
 #Submodules
-/google-api-elixir-client
+#/google-api-elixir-client
 
 # Generated on crash by the VM
 erl_crash.dump
