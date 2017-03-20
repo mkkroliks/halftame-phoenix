@@ -15,5 +15,6 @@ defmodule Halftame.Router do
 
     resources "/users", UserController
     resources "/auth", AuthController, only: [:create, :delete]
+    resources "/couriers_offers", CourierOfferController, except: [:new, :edit]
   end
 end
