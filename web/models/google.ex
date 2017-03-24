@@ -9,4 +9,15 @@ defmodule Halftame.Google do
                      end)
   end
 
+  def place_details(place_id) do
+    response = Google.Apis.Places.Details.details(place_id)
+
+    names = get_in(response, ["result", "address_components"])
+    long_name = get_in(List.first(names), ["long_name"])
+    lat = get_in(response, ["result", "geometry", "location", "lat"])
+    lng = get_in(response, ["result", "geometry", "location", "lng"])
+
+    %{google_id: place_id, name: long_name, latitude: lat, longitude: lng}
+  end
+
 end

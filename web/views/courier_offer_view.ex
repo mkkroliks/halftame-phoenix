@@ -1,4 +1,5 @@
 defmodule Halftame.CourierOfferView do
+  require IEx
   use Halftame.Web, :view
 
   def render("index.json", %{couriers_offers: couriers_offers}) do
@@ -10,6 +11,7 @@ defmodule Halftame.CourierOfferView do
   end
 
   def render("courier_offer.json", %{courier_offer: courier_offer}) do
+    IEx.pry
     %{id: courier_offer.id,
       user_id: courier_offer.user_id,
       departure_date: courier_offer.departure_date,

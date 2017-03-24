@@ -6,10 +6,6 @@ defmodule Halftame.UserControllerTest do
   @valid_attrs %{name: "some content", token: "some content"}
   @invalid_attrs %{}
 
-  # setup %{conn: conn} do
-  #   {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  # end
-
   setup do
     user = insert_user()
     {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
@@ -20,10 +16,11 @@ defmodule Halftame.UserControllerTest do
     conn = build_conn()
       |> put_req_header("authorization", "Bearer #{jwt}")
       |> get("/api/users/#{user.id}")
-    # IEx.pry
+
     assert json_response(conn, 200) == %{"id" => user.id,
-                                         "name" => user.name,
-                                         "token" => user.token}
+                                         "email" => user.email,
+                                         "first_name" => user.first_name,
+                                         "photo" => user.photo}
   end
 
   test "DELETE api/auth/:id", %{jwt: jwt} do
@@ -34,12 +31,18 @@ defmodule Halftame.UserControllerTest do
      assert Guardian.decode_and_verify(jwt) == {:error, :token_not_found}
   end
 
+  test "GET api/users/me", %{jwt: jwt} do
+    conn = build_conn()
+    |> put_req_header("authorization", "Bearer #{jwt}")
+    |> get("/api/users/me")
+
+    assert json_response(conn, 200)
+  end
+
   test "requires user authentication on all actions", %{conn: conn} do
-    # IEx.pry
     Enum.each([
         get(conn, user_path(conn, :show, "123"))
     ], fn conn ->
-      # IEx.pry
       assert json_response(conn, 401)
       assert conn.halted
     end)
@@ -53,10 +56,8 @@ defmodule Halftame.UserControllerTest do
                                                     [access_token: fb_app_access_token])
 
     access_token = Map.get(List.first(list), "access_token")
-    assert User.facebook_user_params(access_token) == %{"email" => "email",
-                                                 "first_name" => "first_name",
-                                                 "photo" => "photo"}
-
+    {:json, result} = User.facebook_user_params(access_token)
+    assert result["access_token"]
   end
 
 

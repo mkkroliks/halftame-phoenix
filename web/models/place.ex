@@ -6,7 +6,7 @@ defmodule Halftame.Place do
     field :name, :string
     field :latitude, :float
     field :longitude, :float
-
+    belongs_to :courier_offer, Halftame.CourierOffer
     timestamps()
   end
 

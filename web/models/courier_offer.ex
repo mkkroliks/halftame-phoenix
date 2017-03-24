@@ -5,8 +5,8 @@ defmodule Halftame.CourierOffer do
     field :departure_date, Ecto.Date
     field :return_date, Ecto.Date
     belongs_to :user, Halftame.User
-    belongs_to :departure_place, Halftame.Place
-    belongs_to :destination_place, Halftame.Place
+    has_one :departure_place, Halftame.Place
+    has_one :destination_place, Halftame.Place
     timestamps()
   end
 

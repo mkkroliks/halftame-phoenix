@@ -1,10 +1,10 @@
 defmodule Halftame.UserController do
-  require IEx
   use Halftame.Web, :controller
+  alias Halftame.Repo
+  import Ecto.Query
+  require IEx
 
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
-  import Ecto.Query
-  alias Halftame.Repo
 
   def unauthenticated(conn, error) do
     IEx.pry

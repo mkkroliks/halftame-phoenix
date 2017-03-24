@@ -1,12 +1,20 @@
 defmodule Halftame.CourierOfferControllerTest do
+  require IEx
   use Halftame.ConnCase
 
   alias Halftame.CourierOffer
-  @valid_attrs %{departure_date: %{day: 17, month: 4, year: 2010}, return_date: %{day: 17, month: 4, year: 2010}}
+  @valid_attrs %{departure_date: %{day: 17, month: 4, year: 2010}, return_date: %{day: 17, month: 4, year: 2010}, departure_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4", destination_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    # {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    user = insert_user()
+    {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
+
+    new_conn = conn
+     |> put_req_header("authorization", "Bearer #{jwt}")
+
+    {:ok, %{jwt: jwt, claims: full_claims, conn: new_conn}}
   end
 
   test "lists all entries on index", %{conn: conn} do
