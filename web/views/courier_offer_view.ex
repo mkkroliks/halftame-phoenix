@@ -7,14 +7,19 @@ defmodule Halftame.CourierOfferView do
   end
 
   def render("show.json", %{courier_offer: courier_offer}) do
-    %{data: render_one(courier_offer, Halftame.CourierOfferView, "courier_offer.json")}
+    render_one(courier_offer, Halftame.CourierOfferView, "courier_offer.json")
   end
 
   def render("courier_offer.json", %{courier_offer: courier_offer}) do
-    IEx.pry
     %{id: courier_offer.id,
-      user_id: courier_offer.user_id,
+      user: Halftame.UserView.display(user: courier_offer.user),
+      destination_place: Halftame.PlaceView.display(place: courier_offer.destination_place),
+      departure_place: Halftame.PlaceView.display(place: courier_offer.departure_place),
       departure_date: courier_offer.departure_date,
       return_date: courier_offer.return_date}
+  end
+
+  def render("error.json", %{message: message}) do
+    %{message: message}
   end
 end

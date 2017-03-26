@@ -4,14 +4,7 @@ defmodule Halftame.UserController do
   import Ecto.Query
   require IEx
 
-  plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
-
-  def unauthenticated(conn, error) do
-    IEx.pry
-    conn
-    |> put_status(401)
-    |> render("error.json", message: "Authentication required")
-  end
+  plug Guardian.Plug.EnsureAuthenticated, handler: Halftame.AuthController
 
   def index(conn, _params) do
     users = Repo.all(Halftame.User)

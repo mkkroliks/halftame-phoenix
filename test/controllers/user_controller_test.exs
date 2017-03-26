@@ -41,7 +41,9 @@ defmodule Halftame.UserControllerTest do
 
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
-        get(conn, user_path(conn, :show, "123"))
+        get(conn, user_path(conn, :show, "123")),
+        get(conn, user_path(conn, :index)),
+        get(conn, user_path(conn, :me))
     ], fn conn ->
       assert json_response(conn, 401)
       assert conn.halted
@@ -59,7 +61,4 @@ defmodule Halftame.UserControllerTest do
     {:json, result} = User.facebook_user_params(access_token)
     assert result["access_token"]
   end
-
-
-
 end

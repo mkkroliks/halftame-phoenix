@@ -2,6 +2,13 @@ defmodule Halftame.AuthController do
   require IEx
   use Halftame.Web, :controller
 
+  def unauthenticated(conn, error) do
+    IEx.pry
+    conn
+    |> put_status(401)
+    |> render("error.json", message: "Authentication required")
+  end
+
   def create(conn, %{"token" => token}) do
     case Halftame.User.login_by_facebook_token(conn, token, repo: Repo) do
        {:ok, user} ->

@@ -9,6 +9,8 @@ defmodule Halftame.CourierOfferController do
   alias Halftame.User
   alias Halftame.Place
 
+  plug Guardian.Plug.EnsureAuthenticated, handler: Halftame.AuthController
+
   def index(conn, _params) do
     couriers_offers = Repo.all(CourierOffer)
     render(conn, "index.json", couriers_offers: couriers_offers)
@@ -27,6 +29,13 @@ defmodule Halftame.CourierOfferController do
          |> Multi.run(:destination_place, &(destination_place_courier_offer_association(return_place_params, &1.courier_offer)))
          |> Repo.transaction() do
       {:ok, %{courier_offer: courier_offer}} ->
+
+        courier_offer =
+        courier_offer
+        |> Repo.preload(:destination_place)
+        |> Repo.preload(:departure_place)
+        |> Repo.preload(:user)
+
         conn
         |> put_status(:created)
         |> put_resp_header("location", courier_offer_path(conn, :show, courier_offer))
