@@ -3,7 +3,7 @@ defmodule Halftame.CourierOfferControllerTest do
   use Halftame.ConnCase
 
   alias Halftame.CourierOffer
-  @valid_attrs %{departure_date: %{day: 17, month: 4, year: 2010}, return_date: %{day: 17, month: 4, year: 2010}, departure_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4", destination_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4"}
+  @valid_attrs %{departure_date: 1486035400, return_date: 1486035766, departure_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4", destination_place_id: "ChIJ3Qv0eaL4BEcRr92HxIebhI4"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do

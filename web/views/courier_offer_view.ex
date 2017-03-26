@@ -15,8 +15,8 @@ defmodule Halftame.CourierOfferView do
       user: Halftame.UserView.display(user: courier_offer.user),
       destination_place: Halftame.PlaceView.display(place: courier_offer.destination_place),
       departure_place: Halftame.PlaceView.display(place: courier_offer.departure_place),
-      departure_date: courier_offer.departure_date,
-      return_date: courier_offer.return_date}
+      departure_date: Halftame.CourierOffer.toUnix(courier_offer.departure_date),
+      return_date: Halftame.CourierOffer.toUnix(courier_offer.departure_date)}
   end
 
   def render("error.json", %{message: message}) do

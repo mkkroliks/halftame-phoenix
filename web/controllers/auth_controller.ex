@@ -3,7 +3,6 @@ defmodule Halftame.AuthController do
   use Halftame.Web, :controller
 
   def unauthenticated(conn, error) do
-    IEx.pry
     conn
     |> put_status(401)
     |> render("error.json", message: "Authentication required")

@@ -36,6 +36,8 @@ defmodule Halftame.CourierOfferController do
         |> Repo.preload(:departure_place)
         |> Repo.preload(:user)
 
+        IEx.pry
+
         conn
         |> put_status(:created)
         |> put_resp_header("location", courier_offer_path(conn, :show, courier_offer))

@@ -1,8 +1,8 @@
-defmodule Halftame.Example do
+defmodule Halftame.SendOffer do
   use Halftame.Web, :model
 
-  schema "examples" do
-    field :name, :string
+  schema "send_offers" do
+    belongs_to :user, Halftame.User
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule Halftame.Example do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [])
+    |> validate_required([])
   end
 end
